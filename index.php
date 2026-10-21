@@ -1,3 +1,12 @@
+<head>
+    <style>
+        form, h1 {
+            width: 50%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
 <?php
     echo "<h1> Login Page </h1>";
     require('db.php');

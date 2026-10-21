@@ -1,3 +1,12 @@
+<head>
+    <style>
+        form, h1 {
+            width: 50%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
 <form method="post">
     <label for="title">Title:</label><br>
     <input type="text" name="title" id="title" size="60" value="<?=$_POST["title"]?>" required maxlength="64"><br>
