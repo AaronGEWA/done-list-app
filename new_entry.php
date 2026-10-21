@@ -16,6 +16,23 @@
 <?php
     require('db.php');
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
-        
+        if ($_POST["status"] === "completed" AND !preg_match("/\d\d\d\d-\d\d-\d\d/", $_POST["date"])) {
+            echo "<p style=\"color:red;\">Complete Entries must have a completion date!</p>";
+        }
+        else {
+            #TODO: Add new entry to database
+            $sql = "INSERT INTO projects (title, description, abschlussdatum, status) VALUES (:title, :description, :abschlussdatum, :status)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':title', $_POST['title']);
+            $stmt->bindValue(':description', $_POST['description']);
+            if ($_POST["status"] === "completed") {
+                $stmt->bindValue(':abschlussdatum', $_POST['date']);
+            }
+            $stmt->bindValue(':status', $_POST['status']);
+            $stmt->execute();
+            if ($stmt->rowCount() === 1) {
+                echo "<p style=\"color:green;\">Entry added!</p>";
+            }
+        }
     }
 ?>
