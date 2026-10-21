@@ -18,9 +18,14 @@
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
         if ($_POST["status"] === "completed" AND !preg_match("/\d\d\d\d-\d\d-\d\d/", $_POST["date"])) {
             echo "<p style=\"color:red;\">Complete Entries must have a completion date!</p>";
+        } 
+        # Check that all POST values match my expectations
+        elseif (!is_string($_POST["title"]) || !is_string($_POST["description"]) || 
+                !preg_match("/(completed)|(cancelled)/", $_POST["status"]) || 
+                !preg_match("/(\d\d\d\d-\d\d-\d\d)|(^$)/", $_POST["date"])) {
+            echo "<p style=\"color:red;\">Invalid Input! Try again.</p>";
         }
         else {
-            #TODO: Add new entry to database
             $sql = "INSERT INTO projects (title, description, abschlussdatum, status) VALUES (:title, :description, :abschlussdatum, :status)";
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':title', $_POST['title']);
