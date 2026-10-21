@@ -1,26 +1,29 @@
 <head>
     <style>
-        table, h1 {
+        table, h1, p {
             width: 50%;
             margin: 0 auto;
         }
     </style>
 </head>
 <h1>Übersichtsseite</h1>
-
+<p>
+    <a href="new_entry.php"><button>Neues Projekt erfassen</button></a>
+    <a href="export.php"><button>Exportieren</button></a>
+</p>
 <?php
     require('db.php');
     # Display all entries here
     $sql = "SELECT * FROM projects";
     $projects = $db->query($sql)->fetchAll();
     foreach ($projects as $row)  {
-        echo "<table>";
+        echo "<table style='margin-bottom:30px'>";
         echo "<tr><th colspan='2'>" . htmlspecialchars($row['title']) . "</th></tr>";
-        echo "<tr><td colspan='2' style='border-bottom: 1px solid #ddd;'>". htmlspecialchars($row['description']) . "<td>";
+        echo "<tr><td colspan='2' style='border-bottom: 1px solid #000;'>". htmlspecialchars($row['description']) . "<td>";
         echo "<tr><td>Status</td><td>" . $row['status'] . "</td></tr>";
         if ($row['status'] === "completed"){
             echo "<tr><td>Abschlussdatum</td><td>" . $row['abschlussdatum'] . "</td></tr>";
         }   
-        echo "</table><p></p>";
+        echo "</table>";
     }
 ?>
