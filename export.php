@@ -41,13 +41,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if(!empty($stmt)){
         $stmt->execute();
         $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $output = '{"exported_at": ' . date("Y-m-d") . ', "entries": [';
+        $output = '{"exported_at": "' . date("Y-m-d") . '", "entries": [';
         foreach ($projects as $row) {
-            $output .= json_encode($row);
+            $output .= json_encode($row) . ',';
         }
-        $output .= "}]";
-        echo $output;
-        # TODO: Download as file
+        $output = rtrim($output, ',');
+        $output .= "]}";
+        echo "<p>Deine Einträge wurden exportiert!";
+        file_put_contents('export.json', $output);
+        echo '<p><button><a href="export.json" download>Download JSON</a></button></p>';
     }
 }
 ?>
