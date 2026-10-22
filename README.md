@@ -10,10 +10,11 @@ Webapp for tracking finished work
 2. Feedback von Kim einholen
 3. Woche 43: Umsetzung
     1. Seite ist im Browser erreichbar
-    4. Datenbank verbindung funktioniert
-    5. Einträge können erfasst, bearbeitet und angezeigt werden
-    6. Login, Passwort Hash
-    7. CSRF Tokens
+    2. Datenbank verbindung funktioniert
+    3. Einträge können erfasst, bearbeitet und angezeigt werden
+    4. *Einträge können exportiert werden*
+    5. Login, Passwort Hash
+    6. CSRF Tokens
 4. Woche 44: Angriff
     1. Mögliche Angriffsmuster finden
     2. Angriffs Scripts schreiben

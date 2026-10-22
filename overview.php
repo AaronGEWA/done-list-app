@@ -14,7 +14,7 @@
 <?php
     require('db.php');
     # Display all entries here
-    $sql = "SELECT * FROM projects";
+    $sql = "SELECT * FROM projects ORDER BY date_completed, id";
     $projects = $db->query($sql)->fetchAll();
     foreach ($projects as $row)  {
         echo "<table style='margin-bottom:30px'>";
@@ -22,7 +22,7 @@
         echo "<tr><td colspan='2' style='border-bottom: 1px solid #000;'>". htmlspecialchars($row['description']) . "<td>";
         echo "<tr><td>Status</td><td>" . $row['status'] . "</td></tr>";
         if ($row['status'] === "completed"){
-            echo "<tr><td>Abschlussdatum</td><td>" . $row['abschlussdatum'] . "</td></tr>";
+            echo "<tr><td>Abschlussdatum</td><td>" . $row['date_completed'] . "</td></tr>";
         }   
         echo "</table>";
     }

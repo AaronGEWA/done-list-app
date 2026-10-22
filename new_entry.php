@@ -35,12 +35,12 @@
             echo "<p style=\"color:red;\">Invalid Input! Try again.</p>";
         }
         else {
-            $sql = "INSERT INTO projects (title, description, abschlussdatum, status) VALUES (:title, :description, :abschlussdatum, :status)";
+            $sql = "INSERT INTO projects (title, description, date_completed, status) VALUES (:title, :description, :date_completed, :status)";
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':title', $_POST['title']);
             $stmt->bindValue(':description', $_POST['description']);
             if ($_POST["status"] === "completed") {
-                $stmt->bindValue(':abschlussdatum', $_POST['date']);
+                $stmt->bindValue(':date_completed', $_POST['date']);
             }
             $stmt->bindValue(':status', $_POST['status']);
             $stmt->execute();

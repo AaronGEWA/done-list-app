@@ -5,7 +5,7 @@
 	"id" INTEGER NOT NULL UNIQUE,
 	"title" TEXT NOT NULL,
 	"description" TEXT NOT NULL,
-	"abschlussdatum" DATE,
+	"date_completed" DATE,
 	"status" TEXT NOT NULL,
 	PRIMARY KEY("id")
     );';
