@@ -1,6 +1,6 @@
 <head>
     <style>
-        form, h1 {
+        form, h1, p {
             width: 50%;
             margin: 0 auto;
         }
