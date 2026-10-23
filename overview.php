@@ -19,11 +19,11 @@
     foreach ($projects as $row)  {
         echo "<table style='margin-bottom:30px'>";
         echo "<tr><th colspan='2'>" . htmlspecialchars($row['title']) . "</th></tr>";
-        echo "<tr><td colspan='2' style='border-bottom: 1px solid #000;'>". htmlspecialchars($row['description']) . "<td>";
-        echo "<tr><td>Status</td><td>" . $row['status'] . "</td></tr>";
+        echo "<tr><td colspan='2' style='border-bottom: 1px solid #000;'>". htmlspecialchars($row['description']) . "</td></tr>";
+        echo "<tr><td style='width:50%'>Status</td><td>" . $row['status'] . "</td></tr>";
         if ($row['status'] === "completed"){
             echo "<tr><td>Abschlussdatum</td><td>" . $row['date_completed'] . "</td></tr>";
-        }   
+        } 
         echo "</table>";
     }
 ?>
