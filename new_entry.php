@@ -6,7 +6,10 @@
         }
     </style>
 </head>
-
+<h1>Neues Projekt erfassen:</h1>
+<p>
+<a href="overview.php"><button>Zürück zur Übersicht</button></a>
+</p>
 <form method="post">
     <label for="title">Title:</label><br>
     <input type="text" name="title" id="title" size="60" value="<?=$_POST["title"]?>" required maxlength="64"><br>
