@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION["username"])) {
+    header("Location: index.php");
+    exit("no verified session");
+}
+?>
+
 <head>
     <style>
         form, h1, p {
