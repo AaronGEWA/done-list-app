@@ -11,6 +11,9 @@ if (!isset($_SESSION["username"])) {
             width: 50%;
             margin: 0 auto;
         }
+        table {
+            margin-top: 30px;
+        }
     </style>
 </head>
 <h1>Übersichtsseite</h1>
@@ -22,7 +25,11 @@ if (!isset($_SESSION["username"])) {
     require('db.php');
     # Check and save an edited entry
     if (!empty($_POST["save_entry"])) {
-        if ($_POST["status"] === "completed" AND !preg_match("/\d\d\d\d-\d\d-\d\d/", $_POST["date"])) {
+        if (empty($_SESSION["csrf_token"]) || empty($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
+            http_response_code(403);
+            die('CSRF Token mismatch.');
+        }
+        elseif ($_POST["status"] === "completed" AND !preg_match("/\d\d\d\d-\d\d-\d\d/", $_POST["date"])) {
             $_POST["edit_entry"] = $_POST["save_entry"];
             $save_failed = TRUE;
         } 
@@ -54,8 +61,8 @@ if (!isset($_SESSION["username"])) {
     $sql = "SELECT * FROM projects ORDER BY date_completed NULLS LAST, id";
     $projects = $db->query($sql)->fetchAll();
     foreach ($projects as $row)  {
-        if ($_POST["edit_entry"] != $row["id"]) {
-            echo "<table style='margin-top:30px' id=T" . $row["id"] . ">";
+        if (empty($_POST["edit_entry"]) || $_POST["edit_entry"] != $row["id"]) {
+            echo "<table id=T" . $row["id"] . ">";
             echo "<tr><th colspan='2'>" . htmlspecialchars($row['title']) . "</th></tr>";
             echo "<tr><td colspan='2' style='border-bottom: 1px solid #000;'>". htmlspecialchars($row['description']) . "</td></tr>";
             echo "<tr><td style='width:50%'>Status</td><td>" . $row['status'] . "</td></tr>";
@@ -68,7 +75,7 @@ if (!isset($_SESSION["username"])) {
             '<input type="hidden" name="edit_entry" value="' . $row["id"] . '">' . 
             '<input type="submit" value="Bearbeiten">' . 
             '</form>';
-            if ($_POST["save_entry"] == $row["id"]) {
+            if (!empty($_POST["save_entry"]) && $_POST["save_entry"] == $row["id"]) {
                 echo "<p style=\"color:green;\">Saved Changes!</p>";
             }
         } else {
@@ -85,6 +92,7 @@ if (!isset($_SESSION["username"])) {
             '<input type="radio" name="status" id="cancelled" value="cancelled" required>' .
             '<label for="status">Cancelled</label><br>' .
             '<input type="hidden" name="save_entry" value="' . $row["id"] . '">' .
+            '<input type="hidden" name="csrf_token" value="' . ($_SESSION["csrf_token"] ?? '') . '">' . 
             '<input type="submit" value="Speichern">' .
             '</form>';
             if ($save_failed) {

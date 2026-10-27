@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (!empty($user) && password_verify($_POST["password"], $user["password_hash"])) {
         session_regenerate_id();
+        $token = bin2hex(random_bytes(32));
+        $_SESSION["csrf_token"] = $token;
         $_SESSION["username"] = $user["username"];
         header("Location: overview.php");
     } else {

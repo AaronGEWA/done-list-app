@@ -12,7 +12,7 @@
     require('db.php');
 ?>
 
-<form method="post" action="verify_login.php">
+<form method="post" action="../verify_login.php">
     <label for="name">Username:</label>
     <input type="text" id="name" name="username" required><br>
     <label for="pwd">Password:</label>

@@ -30,13 +30,18 @@ if (!isset($_SESSION["username"])) {
     <label for="status">Completed</label><br>
     <input type="radio" name="status" id="cancelled" value="cancelled" required>
     <label for="status">Cancelled</label><br>
+    <input type="hidden" name="csrf_token" value=<?=($_SESSION["csrf_token"] ?? '')?>>
     <input type="submit" value="Create">
 </form>
 
 <?php
     require('db.php');
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
-        if ($_POST["status"] === "completed" AND !preg_match("/\d\d\d\d-\d\d-\d\d/", $_POST["date"])) {
+        if (empty($_SESSION["csrf_token"]) || empty($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
+            http_response_code(403);
+            die('CSRF Token mismatch.');
+        }
+        elseif ($_POST["status"] === "completed" AND !preg_match("/\d\d\d\d-\d\d-\d\d/", $_POST["date"])) {
             echo "<p style=\"color:red;\">Complete Entries must have a completion date!</p>";
         } 
         # Check that all POST values match my expectations
