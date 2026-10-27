@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!empty($user) && password_verify($_POST["password"], $user["password_hash"])) {
+        session_regenerate_id();
         $_SESSION["username"] = $user["username"];
         header("Location: overview.php");
     } else {
