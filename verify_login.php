@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["username"] = $user["username"];
         header("Location: overview.php");
     } else {
-        header("Location: index.php");
+        header("Location: index.php/?verify=false");
     }
 }
 ?>

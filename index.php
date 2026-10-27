@@ -1,6 +1,6 @@
 <head>
     <style>
-        form, h1 {
+        form, h1, p {
             width: 50%;
             margin: 0 auto;
         }
@@ -21,5 +21,7 @@
 </form>
 
 <?php
-
+if (!empty($_GET["verify"]) && $_GET["verify"] === "false") {
+    echo '<p style="color:red;">Wrong Username or Password!</p>'; 
+}
 ?>
