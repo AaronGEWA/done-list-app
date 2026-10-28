@@ -45,7 +45,7 @@ if (!isset($_SESSION["username"])) {
             echo "<p style=\"color:red;\">Complete Entries must have a completion date!</p>";
         } 
         # Check that all POST values match my expectations
-        elseif (!is_string($_POST["title"]) || !is_string($_POST["description"]) || 
+        elseif (empty($_POST["title"]) || empty($_POST["description"]) || 
                 !preg_match("/(completed)|(cancelled)/", $_POST["status"]) || 
                 !preg_match("/(\d\d\d\d-\d\d-\d\d)|(^$)/", $_POST["date"])) {
             echo "<p style=\"color:red;\">Invalid Input! Try again.</p>";

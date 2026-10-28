@@ -34,7 +34,7 @@ if (!isset($_SESSION["username"])) {
             $save_failed = TRUE;
         } 
         # Check that all POST values match my expectations
-        elseif (!is_string($_POST["title"]) || !is_string($_POST["description"]) || 
+        elseif (empty($_POST["title"]) || empty($_POST["description"]) || 
                 !preg_match("/(completed)|(cancelled)/", $_POST["status"]) || 
                 !preg_match("/(\d\d\d\d-\d\d-\d\d)|(^$)/", $_POST["date"])) {
             $_POST["edit_entry"] = $_POST["save_entry"];
