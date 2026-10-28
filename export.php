@@ -6,12 +6,7 @@ if (!isset($_SESSION["username"])) {
 }
 ?>
 <head>
-    <style>
-        form, h1, p {
-            width: 50%;
-            margin: 0 auto;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <h1>Einträge Exportieren</h1>
 <p>

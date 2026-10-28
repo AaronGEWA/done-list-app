@@ -6,15 +6,7 @@ if (!isset($_SESSION["username"])) {
 }
 ?>
 <head>
-    <style>
-        form, table, h1, p, div {
-            width: 50%;
-            margin: 0 auto;
-        }
-        table {
-            margin-top: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <h1>Übersichtsseite</h1>
 <p>

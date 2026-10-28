@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+}
+form, table, h1, p, div {
+    width: 50%;
+    margin: 0 auto;
+}
+table {
+    margin-top: 30px;
+}
+td {
+    white-space: pre-wrap;
+}
