@@ -7,7 +7,7 @@ if (!isset($_SESSION["username"])) {
 ?>
 <head>
     <style>
-        form, table, h1, p {
+        form, table, h1, p, div {
             width: 50%;
             margin: 0 auto;
         }
@@ -24,16 +24,25 @@ if (!isset($_SESSION["username"])) {
 <?php
     require('db.php');
     # Check and save an edited entry
-    if (!empty($_POST["save_entry"])) {
+    if (!empty($_POST["save_entry"]) || !empty($_POST["delete_entry"])) {
         if (empty($_SESSION["csrf_token"]) || empty($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {
             http_response_code(403);
             die('CSRF Token mismatch.');
+        }
+        elseif (!empty($_POST["delete_entry"])) {
+            $sql = 'DELETE FROM projects WHERE id=:id';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':id', $_POST["delete_entry"]);
+            $stmt->execute();
+            if ($stmt->rowCount() === 1) {
+                echo '<p>Eintrag gelöscht</p>';
+            }
         }
         elseif ($_POST["status"] === "completed" AND !preg_match("/\d\d\d\d-\d\d-\d\d/", $_POST["date"])) {
             $_POST["edit_entry"] = $_POST["save_entry"];
             $save_failed = TRUE;
         } 
-        # Check that all POST values match my expectations
+        # Check if any POST-values fail my expectations
         elseif (empty($_POST["title"]) || empty($_POST["description"]) || 
                 !preg_match("/(completed)|(cancelled)/", $_POST["status"]) || 
                 !preg_match("/(\d\d\d\d-\d\d-\d\d)|(^$)/", $_POST["date"])) {
@@ -58,7 +67,7 @@ if (!isset($_SESSION["username"])) {
         }
     }
     # Display all entries
-    $sql = "SELECT * FROM projects ORDER BY date_completed NULLS LAST, id";
+    $sql = "SELECT * FROM projects ORDER BY date_completed DESC NULLS LAST, id";
     $projects = $db->query($sql)->fetchAll();
     foreach ($projects as $row)  {
         if (empty($_POST["edit_entry"]) || $_POST["edit_entry"] != $row["id"]) {
@@ -70,11 +79,18 @@ if (!isset($_SESSION["username"])) {
                 echo "<tr><td>Abschlussdatum</td><td>" . $row['date_completed'] . "</td></tr>";
             } 
             echo "</table>";
-
-            echo '<form action="#T' . $row["id"] . '"  method="post">' . 
+            # This form brings up the edit entry form
+            echo '<div><form action="#T' . $row["id"] . '"  method="post" style="display:inline">' . 
             '<input type="hidden" name="edit_entry" value="' . $row["id"] . '">' . 
             '<input type="submit" value="Bearbeiten">' . 
             '</form>';
+            # This form is for deleting an entry
+            echo '<form action="#" onSubmit="return confirm(\'Eintrag wirklich löschen?\')"  method="post" style="display:inline">' . 
+            '<input type="hidden" name="delete_entry" value="' . $row["id"] . '">' . 
+            '<input type="hidden" name="csrf_token" value="' . ($_SESSION["csrf_token"] ?? '') . '">' . 
+            '<input type="submit" value="Löschen">' . 
+            '</form></div>';
+            # Display a message 
             if (!empty($_POST["save_entry"]) && $_POST["save_entry"] == $row["id"]) {
                 echo "<p style=\"color:green;\">Saved Changes!</p>";
             }
