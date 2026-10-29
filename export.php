@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "<p>End Datum muss nach Start Datum sein!</p>";
         } 
         else {
-            $sql = "SELECT * FROM projects WHERE date_completed<=:e_date AND date_completed>=:s_date ORDER BY date_completed";
+            $sql = "SELECT * FROM projects WHERE date_completed<=:e_date AND date_completed>=:s_date ORDER BY date_completed DESC";
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':s_date', $_POST["s_date"]);
             $stmt->bindValue(':e_date', $_POST["e_date"]);
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     elseif($_POST["action"] === "Alle Exportieren") {
-        $sql = "SELECT * FROM projects ORDER BY date_completed NULLS LAST, id";
+        $sql = "SELECT * FROM projects ORDER BY date_completed DESC NULLS LAST, id";
         $stmt = $db->prepare($sql);
     }
     if(!empty($stmt)){
