@@ -4,7 +4,7 @@ Webapp for tracking finished work
 
 ## Setup
 
-1. PHP Installieren: `apt-get install php-cli && apt install php-sqlite3`
+1. PHP Installieren: Ubuntu: `apt-get install php-cli && apt install php-sqlite3`
 2. Branch Register-User holen: `git clone -b Register-User https://github.com/AaronGEWA/done-list-app.git`
 3. PHP built-in Webserver starten: `php -S <ip:port>`
 4. Auf der Webseite Username und Passwort registrieren
@@ -36,3 +36,12 @@ Abgeschlossene Einträge besitzen folgende Felder (Erlaubte Eintragsform in Klam
 - Beschreibung (Text, höchstens 512 Zeichen)
 - Abschlussdatum (Datum: YYYY-MM-DD, leer wenn nicht abgeschlossen)
 - Status (completed|cancelled)
+
+## Protokoll Akzeptanzkriterien
+- Einträge können erfasst und bearbeitet werden. Einträge sind nach Abschlussdatum sortiert.
+- Jede Seite prüft ob die aktuelle Session angemeldet ist und wird nur nach der Verifizierung angezeigt.
+- Die Datenbank verbindung läuft nur über prepared statements, Titel und Beschreibung werden mit `htmlspecialchars()` escaped bevor sie angezeigt werden
+- Speichern und Löschen von Einträgen ist nur nach csrf-Token test möglich.
+- Einträge können nach Abschlussdatum gefiltert im json oder markdown Format exportiert werden
+- Unter dem Header **Setup** ist beschrieben, wie diese App auf einem anderen Gerät eingerichtet werden kann.
+- Das Datenmodell is im OneNote dokumentiert.
