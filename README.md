@@ -2,6 +2,14 @@
 
 Webapp for tracking finished work
 
+## Setup
+
+1. PHP Installieren: `apt-get install php-cli && apt install php-sqlite3`
+2. Branch Register-User holen: `git clone -b Register-User https://github.com/AaronGEWA/done-list-app.git`
+3. PHP built-in Webserver starten: `php -S <ip:port>`
+4. Auf der Webseite Username und Passwort registrieren
+5. Zum Branch main wechseln: `git checkout main`
+
 ## Umsetzungs Eckpunkte, Reihenfolge
 
 1. 15.10: Planung in README und OneNote
