@@ -15,9 +15,9 @@ if (!isset($_SESSION["username"])) {
 </p>
 <form method="post">
     <label for="title">Title:</label><br>
-    <input type="text" name="title" id="title" size="60" value="<?=$_POST["title"]?>" required maxlength="64"><br>
+    <input type="text" name="title" id="title" size="60" value="<?=htmlspecialchars($_POST["title"])?>" required maxlength="64"><br>
     <label for="desc">Description:</label><br>
-    <textarea name="description" id="desc" rows="8" cols="60" required maxlength="512"><?=$_POST["description"]?></textarea><br>
+    <textarea name="description" id="desc" rows="8" cols="60" required maxlength="512"><?=htmlspecialchars($_POST["description"])?></textarea><br>
     <label for="date">Date:</label><br>
     <input type="date" name="date" id="date" value="<?=$_POST["date"]?>"><br>
     <label for="status">Status:</label><br>
